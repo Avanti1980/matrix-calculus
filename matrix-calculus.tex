@@ -1,0 +1,588 @@
+\documentclass{ctexart}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{xcolor}
+\definecolor{Solarized-base03}{RGB}{0, 43, 54}
+\definecolor{Solarized-base02}{RGB}{7, 54, 66}
+\definecolor{Solarized-base01}{RGB}{88, 110, 117}
+\definecolor{Solarized-base00}{RGB}{101, 123, 131}
+\definecolor{Solarized-base0}{RGB}{131, 148, 150}
+\definecolor{Solarized-base1}{RGB}{147, 161, 161}
+\definecolor{Solarized-base2}{RGB}{238, 232, 213}
+\definecolor{Solarized-base3}{RGB}{253, 246, 227}
+\definecolor{Solarized-yellow}{RGB}{181, 137, 0}
+\definecolor{Solarized-orange}{RGB}{203, 75, 22}
+\definecolor{Solarized-red}{RGB}{220, 50, 47}
+\definecolor{Solarized-magenta}{RGB}{211, 54, 130}
+\definecolor{Solarized-violet}{RGB}{108, 113, 196}
+\definecolor{Solarized-blue}{RGB}{38, 139, 210}
+\definecolor{Solarized-cyan}{RGB}{42, 161, 152}
+\definecolor{Solarized-green}{RGB}{133, 153, 0}
+\color{Solarized-base03}
+\pagecolor{Solarized-base3}
+
+\newcommand{\red}[1]{\textcolor{Solarized-red}{#1}}
+\newcommand{\yellow}[1]{\textcolor{Solarized-yellow}{#1}}
+\newcommand{\blue}[1]{\textcolor{Solarized-blue}{#1}}
+\newcommand{\orange}[1]{\textcolor{Solarized-orange}{#1}}
+\newcommand{\cyan}[1]{\textcolor{Solarized-cyan}{#1}}
+\newcommand{\violet}[1]{\textcolor{Solarized-violet}{#1}}
+\newcommand{\magenta}[1]{\textcolor{Solarized-magenta}{#1}}
+\newcommand{\green}[1]{\textcolor{Solarized-green}{#1}}
+
+\usepackage{fullpage}
+\usepackage{graphicx,epsfig,subcaption}
+\usepackage{tikz,pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{ifthen}
+\usetikzlibrary{backgrounds,automata,shapes,snakes,arrows,arrows.meta,chains,positioning,calc}
+
+%%%%%% 下面两行字体设置需根据自己的系统调整
+%\usepackage[charter]{newtxmath} % http://texdoc.net/texmf-dist/doc/fonts/newtx/newtxdoc.pdf
+%\setmainfont[]{EBGaramond08-Regular}
+\setCJKmainfont[BoldFont=FZHei-B01,ItalicFont=FZZhanBiHei-M22]{FZLongZhao-R-GB}
+\xeCJKsetup{CJKmath=true}
+%\everymath{\color{Solarized-magenta}}
+
+
+\theoremstyle{definition}
+\newtheorem{theorem}{\bf{定理}}
+\newtheorem{prop}[theorem]{\bf{命题}}
+\newtheorem{lem}[theorem]{\bf{引理}}
+\newtheorem{cor}[theorem]{\bf{推论}}
+\newtheorem{definition}[theorem]{\bf{定义}}
+\newtheorem{exam}[theorem]{\bf{例}}
+\newtheorem*{rmk}{\bf{注}}
+\renewcommand{\proofname}{\textbf{证明}}
+
+\def \zerov {\bm{0}}
+\def \av {\bm{a}}
+\def \bv {\bm{b}}
+\def \cv {\bm{c}}
+\def \dv {\bm{d}}
+\def \ev {\bm{e}}
+\def \fv {\bm{f}}
+\def \gv {\bm{g}}
+\def \hv {\bm{h}}
+\def \pv {\bm{p}}
+\def \uv {\bm{u}}
+\def \vv {\bm{v}}
+\def \wv {\bm{w}}
+\def \xv {\bm{x}}
+\def \yv {\bm{y}}
+\def \zv {\bm{z}}
+
+\def \Av {\mathbf{A}}
+\def \Bv {\mathbf{B}}
+\def \Cv {\mathbf{C}}
+\def \Dv {\mathbf{D}}
+\def \Ev {\mathbf{E}}
+\def \Fv {\mathbf{F}}
+\def \Gv {\mathbf{G}}
+\def \Hv {\mathbf{H}}
+\def \Iv {\mathbf{I}}
+\def \Kv {\mathbf{K}}
+\def \Lv {\mathbf{L}}
+\def \Mv {\mathbf{M}}
+\def \Pv {\mathbf{P}}
+\def \Qv {\mathbf{Q}}
+\def \Sv {\mathbf{S}}
+\def \Uv {\mathbf{U}}
+\def \Vv {\mathbf{V}}
+\def \Wv {\mathbf{W}}
+\def \Xv {\mathbf{X}}
+\def \Yv {\mathbf{Y}}
+\def \Zv {\mathbf{Z}}
+
+\def \alphav {\bm{\alpha}}
+\def \betav {\bm{\beta}}
+\def \gammav {\bm{\gamma}}
+\def \lambdav {\bm{\lambda}}
+\def \epsilonv {\bm{\epsilon}}
+\def \xiv {\bm{\xi}}
+\def \muv {\bm{\mu}}
+\def \Sigmav {\bm{\Sigma}}
+\def \nuv {\bm{\nu}}
+
+\def \Bcal {\mathcal{B}}
+\def \Ncal {\mathcal{N}}
+
+\def \Dbb {\mathbb{D}}
+\def \Ebb {\mathbb{E}}
+\def \Rbb {\mathbb{R}}
+\def \Sbb {\mathbb{S}}
+
+\def \fhat {\hat{f}}
+\def \ghat {\hat{g}}
+\def \hhat {\hat{h}}
+
+\def \Ffrak{\mathfrak{F}}
+\def \Lfrak {\mathfrak{L}}
+
+\def \cov {\mathrm{cov}}
+\def \st {\mathrm{s.t.}}
+\def \diag {\mathrm{diag}}
+\def \sign {\mathrm{sign}}
+\def \diff {\mathrm{d}}
+\def \sgn {\mathrm{sgn}}
+\def \tr {\mathrm{tr}}
+\def \ow {\mathrm{o.w.}}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\allowdisplaybreaks[4]
+
+\usepackage{enumitem}
+\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt}
+\setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt}
+\setdescription{itemsep=0pt,partopsep=0pt,parsep=0pt,topsep=0pt}
+
+\begin{document}
+\title{矩阵求导}
+\author{圆眼睛的阿凡提哥哥}
+\date{\today}
+\maketitle
+
+标量、向量、矩阵间的求导共有9种可能：
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ | c | c | c | }
+        \hline
+        \green{$\partial 标量 / \partial 标量$} & \blue{$\partial 标量 / \partial 向量$} & \blue{$\partial 标量 / \partial 矩阵$} \\
+        \hline
+        \blue{$\partial 向量 / \partial 标量$}  & \blue{$\partial 向量 / \partial 向量$} & \red{$\partial 向量 / \partial 矩阵$}  \\
+        \hline
+        \blue{$\partial 矩阵 / \partial 标量$}  & \red{$\partial 矩阵 / \partial 向量$}  & \red{$\partial 矩阵 / \partial 矩阵$}  \\
+        \hline
+    \end{tabular}
+    \caption{9种求导情形}
+    \label{table: 9-cases}
+\end{table}
+
+\green{$\partial 标量 / \partial 标量$}就是我们熟悉的单变量微积分，\red{$\partial 向量 / \partial 矩阵$}、\red{$\partial 矩阵 / \partial 向量$}、\red{$\partial 矩阵 / \partial 矩阵$}会涉及高阶张量，处理更为麻烦，因此本文只考虑剩下的5种情形。
+
+设$\uv \in \Rbb^l$，$\Uv \in \Rbb^{m \times n}$，则向量、矩阵对标量求导的定义为
+\begin{align*}
+    \frac{\partial \uv}{\partial x} \triangleq \begin{bmatrix}
+        \frac{\partial u_1}{\partial x} \\ \frac{\partial u_2}{\partial x} \\ \vdots \\ \frac{\partial u_l}{\partial x}
+    \end{bmatrix}, \quad
+    \frac{\partial \Uv}{\partial x} \triangleq \begin{bmatrix}
+        \frac{\partial u_{11}}{\partial x} & \frac{\partial u_{12}}{\partial x} & \ldots & \frac{\partial u_{1n}}{\partial x} \\
+        \frac{\partial u_{21}}{\partial x} & \frac{\partial u_{22}}{\partial x} & \ldots & \frac{\partial u_{2n}}{\partial x} \\
+        \vdots                             & \vdots                             & \ddots & \vdots                             \\
+        \frac{\partial u_{m1}}{\partial x} & \frac{\partial u_{m2}}{\partial x} & \ldots & \frac{\partial u_{mn}}{\partial x}
+    \end{bmatrix}
+\end{align*}
+设$\xv \in \Rbb^l$，$\Xv \in \Rbb^{m \times n}$，则标量对向量、矩阵求导的定义为
+\begin{align*}
+    \frac{\partial u}{\partial \xv} \triangleq \begin{bmatrix} \frac{\partial u}{\partial x_1} & \frac{\partial u}{\partial x_2} & \ldots & \frac{\partial u}{\partial x_l} \end{bmatrix}, \quad \frac{\partial u}{\partial \Xv} \triangleq \begin{bmatrix}
+        \frac{\partial u}{\partial x_{11}} & \frac{\partial u}{\partial x_{21}} & \ldots & \frac{\partial u}{\partial x_{m1}} \\
+        \frac{\partial u}{\partial x_{12}} & \frac{\partial u}{\partial x_{22}} & \ldots & \frac{\partial u}{\partial x_{m2}} \\
+        \vdots                             & \vdots                             & \ddots & \vdots                             \\
+        \frac{\partial u}{\partial x_{1n}} & \frac{\partial u}{\partial x_{2n}} & \ldots & \frac{\partial u}{\partial x_{mn}}
+    \end{bmatrix}
+\end{align*}
+即向量、矩阵对标量求导的结果\blue{与分子尺寸相同}，标量对向量、矩阵求导的结果\blue{与分母的转置尺寸相同}。向量对向量求导的定义为Jacobian矩阵：
+\begin{align*}
+    \frac{\partial \uv}{\partial \xv} \triangleq \begin{bmatrix}
+        \frac{\partial u_1}{\partial x_1} & \frac{\partial u_1}{\partial x_2} & \ldots & \frac{\partial u_1}{\partial x_l} \\
+        \frac{\partial u_2}{\partial x_1} & \frac{\partial u_2}{\partial x_2} & \ldots & \frac{\partial u_2}{\partial x_l} \\
+        \vdots                            & \vdots                            & \ddots & \vdots                            \\
+        \frac{\partial u_l}{\partial x_1} & \frac{\partial u_l}{\partial x_2} & \ldots & \frac{\partial u_l}{\partial x_l}
+    \end{bmatrix}
+\end{align*}
+即\blue{行数与分子尺寸相同}、\blue{列数与分母尺寸相同}。
+
+以上即为\blue{分子布局}，其好处是链式法则跟单变量微积分中的顺序一样，坏处是计算标量值函数$f(\xv)$关于向量变量$\xv$的梯度时要多做一个转置：$\nabla f = (\frac{\partial f}{\partial \xv})^\top$，因为我们更习惯梯度是列向量。分母布局的结果均是分子布局的转置，好处就是算梯度时不用做转置，坏处就是链式法则的顺序要完全反过来。
+
+\section{基本结果}
+
+以下结果根据定义和单变量微积分的求导法则都是显然的。
+
+单变量微积分中\blue{常量的导数为零}
+\begin{align*}
+    \frac{\partial a}{\partial x} = 0
+\end{align*}
+类似的这里有
+\begin{align*}
+    \frac{\partial \av}{\partial x} = \zerov, \quad \frac{\partial a}{\partial \xv} = \zerov^\top, \quad \frac{\partial \av}{\partial \xv} = \zerov, \quad \frac{\partial \Av}{\partial x} = \zerov, \quad \frac{\partial a}{\partial \Xv} = \zerov^\top
+\end{align*}
+
+单变量微积分中\blue{常数标量乘}的求导法则为
+\begin{align*}
+    \frac{\partial a u}{\partial x} = a \frac{\partial u}{\partial x}
+\end{align*}
+类似的这里有
+\begin{align*}
+    \frac{\partial a \uv}{\partial x} = a \frac{\partial \uv}{\partial x}, \quad \frac{\partial a u}{\partial \xv} = a \frac{\partial u}{\partial \xv}, \quad \frac{\partial a \uv}{\partial \xv} = a \frac{\partial \uv}{\partial \xv}, \quad \frac{\partial a \Uv}{\partial x} = a \frac{\partial \Uv}{\partial x}, \quad \frac{\partial a u}{\partial \Xv} = a \frac{\partial u}{\partial \Xv}
+\end{align*}
+
+单变量微积分中\blue{加法}的求导法则为
+\begin{align*}
+    \frac{\partial (u+v)}{\partial x} = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial x}
+\end{align*}
+类似的这里有
+\begin{align*}
+     & \frac{\partial (\uv + \vv)}{\partial x} = \frac{\partial \uv}{\partial x} + \frac{\partial \vv}{\partial x}, \quad \frac{\partial (u+v)}{\partial \xv} = \frac{\partial u}{\partial \xv} + \frac{\partial v}{\partial \xv}, \quad \frac{\partial (\uv + \vv)}{\partial \xv} = \frac{\partial \uv}{\partial \xv} + \frac{\partial \vv}{\partial \xv} \\
+     & \frac{\partial (\Uv + \Vv)}{\partial x} = \frac{\partial \Uv}{\partial x} + \frac{\partial \Vv}{\partial x}, \quad \frac{\partial (u + v)}{\partial \Xv} = \frac{\partial u}{\partial \Xv} + \frac{\partial v}{\partial \Xv}
+\end{align*}
+
+单变量微积分中\blue{乘法}的求导法则为
+\begin{align*}
+    \frac{\partial uv}{\partial x} = \frac{\partial u}{\partial x} v + u \frac{\partial v}{\partial x}
+\end{align*}
+类似的这里有
+\begin{align*}
+     & \frac{\partial \uv \vv}{\partial x} = \frac{\partial \uv}{\partial x} \vv + \uv \frac{\partial \vv}{\partial x}, \quad \frac{\partial uv}{\partial \xv} = \frac{\partial u}{\partial \xv} v + u \frac{\partial v}{\partial \xv} \\
+     & \frac{\partial \Uv \Vv}{\partial x} = \frac{\partial \Uv}{\partial x} \Vv + \Uv \frac{\partial \Vv}{\partial x}, \quad \frac{\partial uv}{\partial \Xv} = \frac{\partial u}{\partial \Xv} v + u \frac{\partial v}{\partial \Xv}
+\end{align*}
+其中第二行是因为
+\begin{align*}
+    \left[ \frac{\partial \Uv \Vv}{\partial x} \right]_{ij} & = \frac{\partial \sum_k u_{ik} v_{kj}}{\partial x} = \sum_k \frac{\partial u_{ik}}{\partial x} v_{kj} + \sum_k u_{ik} \frac{\partial v_{kj}}{\partial x} = \left[ \frac{\partial \Uv}{\partial x} \Vv \right]_{ij} + \left[ \Uv \frac{\partial \Vv}{\partial x} \right]_{ij} \\
+                                                            & \Longrightarrow \frac{\partial \Uv \Vv}{\partial x} = \frac{\partial \Uv}{\partial x} \Vv + \Uv \frac{\partial \Vv}{\partial x}                                                                                                                                              \\
+    \left[ \frac{\partial uv}{\partial \Xv} \right]_{ij}    & = \frac{\partial uv}{\partial x_{ji}} = \frac{\partial u}{\partial x_{ji}} v + u \frac{\partial v}{\partial x_{ji}} = \left[ \frac{\partial u}{\partial \Xv} \right]_{ij} v + u \left[ \frac{\partial v}{\partial \Xv} \right]_{ij}                                          \\
+                                                            & \Longrightarrow \frac{\partial uv}{\partial \Xv} = \frac{\partial u}{\partial \Xv} v + u \frac{\partial v}{\partial \Xv}
+\end{align*}
+第一行可看作第二行的特例。$\partial \uv \vv / \partial \xv$有两种可能，一是$\uv \vv$为标量，即两者的内积，后文会讲；二是$\uv \vv$为矩阵，我们不考虑$\partial 矩阵 / \partial 向量$这种情形。
+
+单变量微积分中有$\partial x / \partial x = 1$，类似的这里有
+\begin{align*}
+    \frac{\partial x_i}{\partial \xv} = \ev_i^\top, \quad \frac{\partial \xv}{\partial x_i} = \ev_i, \quad \frac{\partial \xv}{\partial \xv} = \Iv, \quad \frac{\partial x_{ij}}{\partial \Xv} = \Ev_{ji}, \quad \frac{\partial \Xv}{\partial x_{ij}} = \Ev_{ij}
+\end{align*}
+其中$\Ev_{ij}$是$(i,j)$处为$1$其余为$0$的矩阵。
+
+单变量微积分中的\blue{链式法则}为
+\begin{align*}
+    \frac{\partial g(u)}{\partial x} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial x}
+\end{align*}
+类似的设$\xv \in \Rbb^n$，$\uv = \uv(\xv) \in \Rbb^m$，$\gv: \Rbb^m \mapsto \Rbb^l$，则
+\begin{align*}
+    \underbrace{\frac{\partial \gv(\uv)}{\partial \xv}}_{l \times n} = \underbrace{\frac{\partial \gv(\uv)}{\partial \uv}}_{l \times m} \underbrace{\frac{\partial \uv}{\partial \xv}}_{m \times n}
+\end{align*}
+这是因为
+\begin{align*}
+    \left[ \frac{\partial \gv(\uv)}{\partial \xv} \right]_{ij} & = \frac{\partial [\gv(\uv)]_i}{\partial x_j} = \sum_{k \in [m]} \frac{\partial [\gv(\uv)]_i}{\partial u_k} \frac{\partial u_k}{\partial x_j} = \frac{\partial [\gv(\uv)]_i}{\partial \uv} \frac{\partial \uv}{\partial x_j} = \left[ \frac{\partial \gv(\uv)}{\partial \uv} \right]_{i,:} \left[ \frac{\partial \uv}{\partial \xv} \right]_{:,j} = \left[ \frac{\partial \gv(\uv)}{\partial \uv} \frac{\partial \uv}{\partial \xv} \right]_{i,j} \\
+                                                               & \Longrightarrow \frac{\partial \gv(\uv)}{\partial \xv} = \frac{\partial \gv(\uv)}{\partial \uv} \frac{\partial \uv}{\partial \xv}
+\end{align*}
+注意若$n = m = l = 1$，就退化成了单变量的链式法则。
+
+设$u = u(\Xv)$，$g: \Rbb \mapsto \Rbb$，则
+\begin{align*}
+    \frac{\partial g(u)}{\partial \Xv} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial \Xv}
+\end{align*}
+这是因为
+\begin{align*}
+    \left[ \frac{\partial g(u)}{\partial \Xv} \right]_{ij} & = \frac{\partial g(u)}{\partial x_{ji}} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial x_{ji}} = \frac{\partial g(u)}{\partial u} \left[ \frac{\partial u}{\partial \Xv} \right]_{ij} \Longrightarrow \frac{\partial g(u)}{\partial \Xv} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial \Xv}
+\end{align*}
+
+设$\Uv = \Uv(x) \in \Rbb^{m \times n}$，$g: \Rbb^{m \times n} \mapsto \Rbb$，则
+\begin{align*}
+    \frac{\partial g(\Uv)}{\partial x} = \sum_{p,q} \frac{\partial g(\Uv)}{\partial u_{pq}} \frac{\partial u_{pq}}{\partial x} = \tr \left( \frac{\partial g(\Uv)}{\partial \Uv} \frac{\partial \Uv}{\partial x} \right)
+\end{align*}
+其中第二个等号是因为
+\begin{align*}
+    \tr(\Av^\top \Bv) = \sum_q \sum_p a_{pq} b_{pq} = \sum_{p,q} a_{pq} b_{pq}
+\end{align*}
+
+
+\section{向量对标量求导}
+
+矩阵和向量的乘积是向量，若$\Av$与$\xv$无关，易知有
+\begin{align*}
+     & \left[ \frac{\partial \Av \uv}{\partial x} \right]_{i} = \frac{\partial [\Av \uv]_i}{\partial x} = \frac{\partial \sum_k a_{ik} u_k}{\partial x} = \sum_k a_{ik} \frac{\partial u_k}{\partial x} = \left[ \Av \frac{\partial \uv}{\partial x} \right]_i \Longrightarrow \frac{\partial \Av \uv}{\partial x} = \Av \frac{\partial \uv}{\partial x} \\
+     & \left[ \frac{\partial \uv^\top \Av}{\partial x} \right]_i = \frac{\partial [\uv^\top \Av]_i}{\partial x} = \frac{\partial [\Av^\top \uv]_i}{\partial x} = \left[ \Av^\top \frac{\partial \uv}{\partial x} \right]_i \Longrightarrow \frac{\partial \uv^\top \Av}{\partial x} = \Av^\top \frac{\partial \uv}{\partial x}
+\end{align*}
+
+向量的外积也是向量，记$\uv = [u_1(x); u_2(x); u_3(x)]$，$\vv = [v_1(x); v_2(x); v_3(x)]$，则
+\begin{align*}
+    \uv^\top \times \vv = \begin{bmatrix}
+        u_2 v_3 - u_3 v_2 \\ u_3 v_1 - u_1 v_3 \\ u_1 v_2 - u_2 v_1
+    \end{bmatrix}
+\end{align*}
+于是
+\begin{align*}
+    \frac{\partial (\uv^\top \times \vv)}{\partial x} & = \begin{bmatrix}
+        \frac{\partial u_2}{\partial x} v_3 - \frac{\partial u_3}{\partial x} v_2 + u_2 \frac{\partial v_3}{\partial x} - u_3 \frac{\partial v_2}{\partial x} \\
+        \frac{\partial u_3}{\partial x} v_1 - \frac{\partial u_1}{\partial x} v_3 + u_3 \frac{\partial v_1}{\partial x} - u_1 \frac{\partial v_3}{\partial x} \\
+        \frac{\partial u_1}{\partial x} v_2 - \frac{\partial u_2}{\partial x} v_1 + u_1 \frac{\partial v_2}{\partial x} - u_2 \frac{\partial v_1}{\partial x} \\
+    \end{bmatrix} = \left( \frac{\partial \uv}{\partial x} \right)^\top \times \vv + \uv^\top \times \frac{\partial \vv}{\partial x}
+\end{align*}
+
+
+\section{标量对向量求导}
+
+二次型是标量，设$\Av$与$\xv$无关，易知有
+\begin{align*}
+    \left[ \frac{\partial \uv^\top \Av \vv}{\partial \xv} \right]_i & = \frac{\partial \uv^\top \Av \vv}{\partial x_i} = \frac{\partial \sum_j \sum_k u_j a_{jk} v_k}{\partial x_i} = \sum_j \sum_k u_j a_{jk} \frac{\partial v_k}{\partial x_i} + \sum_j \sum_k \frac{\partial u_j}{\partial x_i} a_{jk} v_k         \\
+                                                                    & = \uv^\top \Av \frac{\partial \vv}{\partial x_i} + \vv^\top \Av^\top \frac{\partial \uv}{\partial x_i} = \left[ \uv^\top \Av \frac{\partial \vv}{\partial \xv} \right]_i + \left[ \vv^\top \Av^\top \frac{\partial \uv}{\partial \xv} \right]_i \\
+                                                                    & \Longrightarrow \blue{\frac{\partial \uv^\top \Av \vv}{\partial \xv} = \uv^\top \Av \frac{\partial \vv}{\partial \xv} + \vv^\top \Av^\top \frac{\partial \uv}{\partial \xv}}
+\end{align*}
+
+特别的，
+\begin{itemize}
+    \item 取$\Av = \Iv$，则
+          \begin{align*}
+              \frac{\partial \uv^\top \vv}{\partial \xv} = \uv^\top \frac{\partial \vv}{\partial \xv} + \vv^\top \frac{\partial \uv}{\partial \xv}
+          \end{align*}
+          进一步若$\uv = \av$与$\xv$无关，则
+          \begin{align*}
+              \frac{\partial \av^\top \vv}{\partial \xv} = \av^\top \frac{\partial \vv}{\partial \xv}, \quad \frac{\partial \av^\top \xv}{\partial \xv} = \av^\top \frac{\partial \xv}{\partial \xv} = \av^\top, \quad \frac{\partial \bv^\top \Av \xv}{\partial \xv} = \bv^\top \Av
+          \end{align*}
+    \item 取$\uv = \vv = \xv$，则
+          \begin{align*}
+              \frac{\partial \xv^\top \Av \xv}{\partial \xv} = \xv^\top \Av \frac{\partial \xv}{\partial \xv} + \xv^\top \Av^\top \frac{\partial \xv}{\partial \xv} = \xv^\top (\Av + \Av^\top) \overset{\text{若}\Av\text{对称}}{=} 2 \xv^\top \Av
+          \end{align*}
+          进一步若$\Av = \Iv$，则
+          \begin{align*}
+              \frac{\partial \xv^\top \xv}{\partial \xv} = \frac{\partial \|\xv\|^2}{\partial \xv} = 2 \xv^\top
+          \end{align*}
+    \item 若$\Av = \bv \av^\top$，则
+          \begin{align*}
+              \frac{\partial \xv^\top \bv \av^\top \xv}{\partial \xv} = \frac{\partial \av^\top \xv \xv^\top \bv}{\partial \xv} = \xv^\top (\av \bv^\top + \bv \av^\top)
+          \end{align*}
+    \item 更一般的有
+          \begin{align*}
+              \frac{\partial (\Av \xv + \bv)^\top \Cv (\Dv \xv + \ev)}{\partial \xv} & = \frac{\partial (\xv^\top \Av^\top \Cv \Dv \xv + \bv^\top \Cv \Dv \xv + \xv^\top \Av^\top \Cv \ev + \bv^\top \ev)}{\partial \xv} \\
+                                                                                     & = \xv^\top (\Av^\top \Cv \Dv + \Dv^\top \Cv^\top \Av) + \bv^\top \Cv \Dv + \ev^\top \Cv^\top \Av                                  \\
+                                                                                     & = (\Dv \xv + \ev)^\top \Cv^\top \Av + (\Av \xv + \bv)^\top \Cv \Dv
+          \end{align*}
+\end{itemize}
+
+范数也是标量，若$\av$与$\xv$无关，则
+\begin{align*}
+    \left[ \frac{\partial \| \xv - \av \|}{\partial \xv} \right]_i & = \frac{\partial \| \xv - \av \|}{\partial x_i} = \frac{\partial \sqrt{\sum_j (x_j - a_j)^2}}{\partial x_i} = \frac{1}{2} \frac{2 (x_i - a_i)}{\sqrt{\sum_j (x_j - a_j)^2}} = \frac{x_i - a_i}{\| \xv - \av \|} \\
+                                                                   & \Longrightarrow \frac{\partial \| \xv - \av \|}{\partial \xv} = \frac{(\xv - \av)^\top}{\| \xv - \av \|}
+\end{align*}
+
+
+\section{向量对向量求导}
+
+若$\Av$与$\xv$无关，易知有
+\begin{align*}
+     & \left[ \frac{\partial \Av \uv}{\partial \xv} \right]_{ij} = \frac{\partial [\Av \uv]_i}{\partial x_j} = \frac{\partial \sum_k a_{ik} u_k}{\partial x_j} = \sum_k a_{ik} \frac{\partial u_k}{\partial x_j} = \left[ \Av \frac{\partial \uv}{\partial \xv} \right]_{ij} \Longrightarrow \frac{\partial \Av \uv}{\partial \xv} = \Av \frac{\partial \uv}{\partial \xv} \\
+     & \left[ \frac{\partial \uv^\top \Av}{\partial \xv} \right]_{ij} = \frac{\partial [\uv^\top \Av]_i}{\partial x_j} = \frac{\partial [\Av^\top \uv]_i}{\partial x_j} = \left[ \Av^\top \frac{\partial \uv}{\partial \xv} \right]_{ij} \Longrightarrow \frac{\partial \uv^\top \Av}{\partial \xv} = \Av^\top \frac{\partial \uv}{\partial \xv}
+\end{align*}
+特别的，若$\uv = \xv$，则
+\begin{align*}
+    \frac{\partial \Av \xv}{\partial \xv} = \Av \frac{\partial \xv}{\partial \xv} = \Av, \quad \frac{\partial \xv^\top \Av}{\partial \xv} = \Av^\top \frac{\partial \xv}{\partial \xv} = \Av^\top
+\end{align*}
+
+若$v = v(\xv)$，则
+\begin{align*}
+    \left[ \frac{\partial v \uv}{\partial \xv} \right]_{ij} = \frac{\partial v u_i}{\partial x_j} = v \frac{\partial u_i}{\partial x_j} + u_i \frac{\partial v}{\partial x_j} = v \left[ \frac{\partial \uv}{\partial \xv} \right]_{ij} + \left[ \uv \frac{\partial v}{\partial \xv} \right]_{ij} \Longrightarrow \frac{\partial v \uv}{\partial \xv} = v \frac{\partial \uv}{\partial \xv} + \uv \frac{\partial v}{\partial \xv}
+\end{align*}
+注意第一项是标量乘以Jacobian矩阵，第二项是列向量乘以行向量。
+
+
+\section{矩阵对标量求导}
+
+若$u = u(x)$，$\Vv = \Vv(x)$，则
+\begin{align*}
+    \left[ \frac{\partial u \Vv}{\partial x} \right]_{ij} = \frac{\partial u v_{ij}}{\partial x} = \frac{\partial u}{\partial x} v_{ij} + u \frac{\partial v_{ij}}{\partial x} = \frac{\partial u}{\partial x} \left[ \Vv \right]_{ij} + u \left[ \frac{\partial \Vv}{\partial x} \right]_{ij} \Longrightarrow \frac{\partial u \Vv}{\partial x} = \frac{\partial u}{\partial x} \Vv + u \frac{\partial \Vv}{\partial x}
+\end{align*}
+
+若乘积求导法则中的$\Uv$或$\Vv$可继续分解为$x$相关项的乘积，例如$\Vv \leftarrow \Vv \Wv$，则
+\begin{align} \label{eq: product}
+    \frac{\partial \Uv \Vv \Wv}{\partial x} = \frac{\partial \Uv}{\partial x} \Vv \Wv + \Uv \frac{\partial \Vv \Wv}{\partial x} = \frac{\partial \Uv}{\partial x} \Vv \Wv + \Uv \left( \frac{\partial \Vv}{\partial x} \Wv + \Vv \frac{\partial \Wv}{\partial x} \right) = \frac{\partial \Uv}{\partial x} \Vv \Wv + \Uv \frac{\partial \Vv}{\partial x} \Wv + \Uv \Vv \frac{\partial \Wv}{\partial x}
+\end{align}
+据此可知若$\Av$、$\Bv$与$x$无关，则
+\begin{align*}
+    \frac{\partial \Av \Uv \Bv}{\partial x} = \Av \frac{\partial \Uv}{\partial x} \Bv
+\end{align*}
+当$\Uv$为方阵、$n$为正整数时有
+\begin{align} \label{eq: power}
+    \frac{\partial \Uv^n}{\partial x} = \Uv^{n-1} \frac{\partial \Uv}{\partial x} + \Uv^{n-2} \frac{\partial \Uv}{\partial x} \Uv + \cdots + \Uv \frac{\partial \Uv}{\partial x} \Uv^{n-2} + \frac{\partial \Uv}{\partial x} \Uv^{n-1} = \sum_{i \in [n]} \Uv^{i-1} \frac{\partial \Uv}{\partial x} \Uv^{n-i}
+\end{align}
+
+令乘积求导法则中的$\Vv = \Uv^{-1}$可得
+\begin{align} \label{eq: inverse}
+    \zerov = \frac{\partial \Iv}{\partial x} = \frac{\partial \Uv \Uv^{-1}}{\partial x} = \Uv \frac{\partial \Uv^{-1}}{\partial x} + \frac{\partial \Uv}{\partial x} \Uv^{-1} \Longrightarrow \frac{\partial \Uv^{-1}}{\partial x} = - \Uv^{-1} \frac{\partial \Uv}{\partial x} \Uv^{-1}
+\end{align}
+进一步结合式(\ref{eq: product})可得Hessian矩阵
+\begin{align*}
+    \frac{\partial^2 \Uv^{-1}}{\partial x \partial y} & = \frac{\partial}{\partial y} \left( - \Uv^{-1} \frac{\partial \Uv}{\partial x} \Uv^{-1} \right) = - \frac{\partial \Uv^{-1}}{\partial y} \frac{\partial \Uv}{\partial x} \Uv^{-1} - \Uv^{-1} \frac{\partial^2 \Uv}{\partial x \partial y} \Uv^{-1} - \Uv^{-1} \frac{\partial \Uv}{\partial x} \frac{\partial \Uv^{-1}}{\partial y} \\
+                                                      & = \Uv^{-1} \frac{\partial \Uv}{\partial y} \Uv^{-1} \frac{\partial \Uv}{\partial x} \Uv^{-1} - \Uv^{-1} \frac{\partial^2 \Uv}{\partial x \partial y} \Uv^{-1} + \Uv^{-1} \frac{\partial \Uv}{\partial x} \Uv^{-1} \frac{\partial \Uv}{\partial y} \Uv^{-1}                                                                          \\
+                                                      & = \Uv^{-1} \left( \frac{\partial \Uv}{\partial y} \Uv^{-1} \frac{\partial \Uv}{\partial x} - \frac{\partial^2 \Uv}{\partial x \partial y} + \frac{\partial \Uv}{\partial x} \Uv^{-1} \frac{\partial \Uv}{\partial y} \right) \Uv^{-1}
+\end{align*}
+
+矩阵除了常规的乘积外，还有Kronecker积和Hadamard积。设$\Uv \in \Rbb^{m \times n}$，$\Vv \in \Rbb^{p \times q}$，则
+\begin{align*}
+    \frac{\partial \Uv \otimes \Vv}{\partial x} & = \begin{bmatrix}
+        \frac{\partial u_{11} \Vv}{\partial x} & \frac{\partial u_{12} \Vv}{\partial x} & \cdots & \frac{\partial u_{1n} \Vv}{\partial x} \\
+        \frac{\partial u_{21} \Vv}{\partial x} & \frac{\partial u_{22} \Vv}{\partial x} & \cdots & \frac{\partial u_{2n} \Vv}{\partial x} \\
+        \vdots                                 & \vdots                                 & \ddots & \vdots                                 \\
+        \frac{\partial u_{m1} \Vv}{\partial x} & \frac{\partial u_{m2} \Vv}{\partial x} & \cdots & \frac{\partial u_{mn} \Vv}{\partial x} \\
+    \end{bmatrix}                                                                \\
+                                                & = \begin{bmatrix}
+        \frac{\partial u_{11}}{\partial x} \Vv + u_{11} \frac{\partial \Vv}{\partial x} & \frac{\partial u_{12}}{\partial x} \Vv + u_{12} \frac{\partial \Vv}{\partial x} & \cdots & \frac{\partial u_{1n}}{\partial x} \Vv + u_{1n} \frac{\partial \Vv}{\partial x} \\
+        \frac{\partial u_{21}}{\partial x} \Vv + u_{21} \frac{\partial \Vv}{\partial x} & \frac{\partial u_{22}}{\partial x} \Vv + u_{22} \frac{\partial \Vv}{\partial x} & \cdots & \frac{\partial u_{2n}}{\partial x} \Vv + u_{2n} \frac{\partial \Vv}{\partial x} \\
+        \vdots                                                                          & \vdots                                                                          & \ddots & \vdots                                                                          \\
+        \frac{\partial u_{m1}}{\partial x} \Vv + u_{m1} \frac{\partial \Vv}{\partial x} & \frac{\partial u_{m2}}{\partial x} \Vv + u_{m2} \frac{\partial \Vv}{\partial x} & \cdots & \frac{\partial u_{mn}}{\partial x} \Vv + u_{mn} \frac{\partial \Vv}{\partial x} \\
+    \end{bmatrix}                                                                \\
+                                                & = \begin{bmatrix}
+        \frac{\partial u_{11}}{\partial x} \Vv & \frac{\partial u_{12}}{\partial x} \Vv & \cdots & \frac{\partial u_{1n}}{\partial x} \Vv \\
+        \frac{\partial u_{21}}{\partial x} \Vv & \frac{\partial u_{22}}{\partial x} \Vv & \cdots & \frac{\partial u_{2n}}{\partial x} \Vv \\
+        \vdots                                 & \vdots                                 & \ddots & \vdots                                 \\
+        \frac{\partial u_{m1}}{\partial x} \Vv & \frac{\partial u_{m2}}{\partial x} \Vv & \cdots & \frac{\partial u_{mn}}{\partial x} \Vv \\
+    \end{bmatrix} + \begin{bmatrix}
+        u_{11} \frac{\partial \Vv}{\partial x} & u_{12} \frac{\partial \Vv}{\partial x} & \cdots & u_{1n} \frac{\partial \Vv}{\partial x} \\
+        u_{21} \frac{\partial \Vv}{\partial x} & u_{22} \frac{\partial \Vv}{\partial x} & \cdots & u_{2n} \frac{\partial \Vv}{\partial x} \\
+        \vdots                                 & \vdots                                 & \ddots & \vdots                                 \\
+        u_{m1} \frac{\partial \Vv}{\partial x} & u_{m2} \frac{\partial \Vv}{\partial x} & \cdots & u_{mn} \frac{\partial \Vv}{\partial x} \\
+    \end{bmatrix}                                   \\
+                                                & = \frac{\partial \Uv}{\partial x} \otimes \Vv + \Uv \otimes \frac{\partial \Vv}{\partial x}
+\end{align*}
+设$\Uv, \Vv \in \Rbb^{m \times n}$，则
+\begin{align*}
+    \frac{\partial \Uv \circ \Vv}{\partial x} & = \begin{bmatrix}
+        \frac{\partial u_{11} v_{11}}{\partial x} & \frac{\partial u_{12} v_{12}}{\partial x} & \cdots & \frac{\partial u_{1n} v_{1n}}{\partial x} \\
+        \frac{\partial u_{21} v_{21}}{\partial x} & \frac{\partial u_{22} v_{22}}{\partial x} & \cdots & \frac{\partial u_{2n} v_{2n}}{\partial x} \\
+        \vdots                                    & \vdots                                    & \ddots & \vdots                                    \\
+        \frac{\partial u_{m1} v_{m1}}{\partial x} & \frac{\partial u_{m2} v_{m2}}{\partial x} & \cdots & \frac{\partial u_{mn} v_{mn}}{\partial x} \\
+    \end{bmatrix}                                                            \\
+                                              & = \begin{bmatrix}
+        \frac{\partial u_{11}}{\partial x} v_{11} & \frac{\partial u_{12}}{\partial x} v_{12} & \cdots & \frac{\partial u_{1n}}{\partial x} v_{1n} \\
+        \frac{\partial u_{21}}{\partial x} v_{21} & \frac{\partial u_{22}}{\partial x} v_{22} & \cdots & \frac{\partial u_{2n}}{\partial x} v_{2n} \\
+        \vdots                                    & \vdots                                    & \ddots & \vdots                                    \\
+        \frac{\partial u_{m1}}{\partial x} v_{m1} & \frac{\partial u_{m2}}{\partial x} v_{m2} & \cdots & \frac{\partial u_{mn}}{\partial x} v_{mn} \\
+    \end{bmatrix} + \begin{bmatrix}
+        u_{11} \frac{\partial v_{11}}{\partial x} & u_{12} \frac{\partial v_{12}}{\partial x} & \cdots & u_{1n} \frac{\partial v_{1n}}{\partial x} \\
+        u_{21} \frac{\partial v_{21}}{\partial x} & u_{22} \frac{\partial v_{22}}{\partial x} & \cdots & u_{2n} \frac{\partial v_{2n}}{\partial x} \\
+        \vdots                                    & \vdots                                    & \ddots & \vdots                                    \\
+        u_{m1} \frac{\partial v_{m1}}{\partial x} & u_{m2} \frac{\partial v_{m2}}{\partial x} & \cdots & u_{mn} \frac{\partial v_{mn}}{\partial x} \\
+    \end{bmatrix}                               \\
+                                              & = \frac{\partial \Uv}{\partial x} \circ \Vv + \Uv \circ \frac{\partial \Vv}{\partial x}
+\end{align*}
+
+设多项式函数$g(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots$，则$g'(x) = a_1 + 2 a_2 x + 3 a_3 x^2 + \cdots$，设$\Av$为与$x$无关的方阵，记
+\begin{align*}
+    g (x \Av)  & = a_0 \Iv + a_1 x \Av + a_2 x^2 \Av^2 + a_3 x^3 \Av^3 + \cdots \\
+    g' (x \Av) & = a_1 \Iv + 2 a_2 x \Av + 3 a_3 x^2 \Av^2 + \cdots
+\end{align*}
+易知有
+\begin{align*}
+    \frac{\partial g(x \Av)}{\partial x} & = a_1 \Av + 2 a_2 x \Av^2 + 3 a_3 x^2 \Av^3 + \cdots                      \\
+                                         & = \Av (a_1 \Iv + 2 a_2 x \Av + 3 a_3 x^2 \Av^2 + \cdots) = \Av g' (x \Av) \\
+                                         & = (a_1 \Iv + 2 a_2 x \Av + 3 a_3 x^2 \Av^2 + \cdots) \Av = g' (x \Av) \Av
+\end{align*}
+对于$e^x$、$\ln x$、$\sin x$、$\cos x$，上式依然适用，例如
+\begin{align*}
+    \frac{\partial e^{x \Av}}{\partial x} = \Av e^{x \Av} = e^{x \Av} \Av
+\end{align*}
+
+\section{标量对矩阵求导}
+
+矩阵常见的标量函数有迹和行列式。
+
+\subsection{迹对矩阵求导}
+
+若$a$与$\Xv$无关，$\Uv = \Uv(\Xv)$，$\Vv = \Vv(\Xv)$，则以下结论是显然的：
+\begin{align*}
+    \frac{\partial \tr(\Xv)}{\partial \Xv} = \Iv, \quad \frac{\partial \tr(\Uv+\Vv)}{\partial \Xv} = \frac{\partial \tr(\Uv)}{\partial \Xv} + \frac{\partial \tr(\Vv)}{\partial \Xv}, \quad \frac{\partial \tr(a \Uv)}{\partial \Xv} = a \frac{\partial \tr(\Uv)}{\partial \Xv}
+\end{align*}
+对于乘积有
+\begin{align*}
+    \left[ \frac{\partial \tr(\Uv \Vv)}{\partial \Xv} \right]_{ij} & = \frac{\partial \tr(\Uv \Vv)}{\partial x_{ji}} = \frac{\partial \sum_p \sum_q u_{pq} v_{qp}}{\partial x_{ji}} = \sum_p \sum_q \left( \frac{\partial u_{pq}}{\partial x_{ji}} v_{qp} + u_{pq} \frac{\partial v_{qp}}{\partial x_{ji}} \right) \\
+                                                                   & = \tr \left( \frac{\partial \Uv}{\partial x_{ji}} \Vv \right) + \tr \left( \Uv \frac{\partial \Vv}{\partial x_{ji}} \right) = \tr \left( \frac{\partial \Uv \Vv}{\partial x_{ji}} \right)
+\end{align*}
+由此可知迹和求导的顺序可以交换。特别的，
+\begin{itemize}
+    \item 取$\Uv = \Av$与$\Xv$无关，$\Vv = \Xv$，则
+          \begin{align*}
+              \left[ \frac{\partial \tr(\Av \Xv)}{\partial \Xv} \right]_{ij} = \tr \left( \Av \frac{\partial \Xv}{\partial x_{ji}} \right) = \tr ( \Av \Ev_{ji} ) = a_{ij} \Longrightarrow \frac{\partial \tr(\Av \Xv)}{\partial \Xv} = \frac{\partial \tr(\Xv \Av)}{\partial \Xv} = \Av
+          \end{align*}
+          进一步若$\Bv$与$\Xv$也无关，则
+          \begin{align*}
+              \frac{\partial \tr(\Av \Xv \Bv)}{\partial \Xv} = \frac{\partial \tr(\Bv \Av \Xv)}{\partial \Xv} = \Bv \Av
+          \end{align*}
+    \item 取$\Uv = \Av$与$\Xv$无关，$\Vv = \Xv^\top$，则
+          \begin{align*}
+              \frac{\partial \tr(\Av \Xv^\top)}{\partial \Xv} = \frac{\partial \tr(\Xv \Av^\top)}{\partial \Xv} = \Av^\top
+          \end{align*}
+    \item 取$\Uv = \Av$与$\Xv$无关，$\Vv = \Xv \Xv^\top$，则
+          \begin{align*}
+              \left[ \frac{\partial \tr(\Av \Xv \Xv^\top)}{\partial \Xv} \right]_{ij} & = \tr \left( \Av \frac{\partial \Xv \Xv^\top}{\partial x_{ji}} \right) = \tr \left( \Av \frac{\partial \Xv}{\partial x_{ji}} \Xv^\top \right) + \tr \left( \Av \Xv \frac{\partial \Xv^\top}{\partial x_{ji}} \right) \\
+                                                                                      & = \tr(\Av \Ev_{ji} \Xv^\top) + \tr(\Av \Xv \Ev_{ij})                                                                                                                                                                 \\
+                                                                                      & = [\Xv^\top \Av]_{ij} + [\Av \Xv]_{ji}
+          \end{align*}
+          从而
+          \begin{align*}
+              \frac{\partial \tr(\Av \Xv \Xv^\top)}{\partial \Xv} = \frac{\partial \tr(\Xv^\top \Av \Xv)}{\partial \Xv} = \Xv^\top \Av + \Xv^\top \Av^\top = \Xv^\top (\Av + \Av^\top)
+          \end{align*}
+    \item 取$\Uv = \Av$与$\Xv$无关，$\Vv = \Xv^{-1}$，结合式(\ref{eq: inverse})可得
+          \begin{align*}
+              \left[ \frac{\partial \tr(\Av \Xv^{-1})}{\partial \Xv} \right]_{ij} & = \tr \left( \Av \frac{\partial \Xv^{-1}}{\partial x_{ji}} \right) = \tr \left( - \Av \Xv^{-1} \frac{\partial \Xv}{\partial x_{ji}} \Xv^{-1} \right) = - \tr \left( \Xv^{-1} \Av \Xv^{-1} \Ev_{ji} \right) = - [\Xv^{-1} \Av \Xv^{-1}]_{ij} \\
+                                                                                  & \Longrightarrow \frac{\partial \tr(\Av \Xv^{-1})}{\partial \Xv} = \frac{\partial \tr(\Xv^{-1} \Av)}{\partial \Xv} = - \Xv^{-1} \Av \Xv^{-1}
+          \end{align*}
+    \item 取$\Uv = \Av \Xv \Bv$，$\Vv = \Xv^\top \Cv$，其中$\Av$、$\Bv$、$\Cv$与$\Xv$无关，则
+          \begin{align*}
+              \left[ \frac{\partial \tr(\Av \Xv \Bv \Xv^\top \Cv)}{\partial \Xv} \right]_{ij} & = \tr \left( \frac{\partial \Av \Xv \Bv}{\partial x_{ji}} \Xv^\top \Cv \right) + \tr \left( \Av \Xv \Bv \frac{\partial \Xv^\top \Cv}{\partial x_{ji}} \right) \\
+                                                                                              & = \tr \left( \Av \Ev_{ji} \Bv \Xv^\top \Cv \right) + \tr \left( \Av \Xv \Bv \Ev_{ij} \Cv \right)                                                              \\
+                                                                                              & = [\Bv \Xv^\top \Cv \Av]_{ij} + [\Cv \Av \Xv \Bv]_{ji}                                                                                                        \\
+                                                                                              & \Longrightarrow \frac{\partial \tr(\Av \Xv \Bv \Xv^\top \Cv)}{\partial \Xv} = \Bv \Xv^\top \Cv \Av + \Bv^\top \Xv^\top \Av^\top \Cv^\top
+          \end{align*}
+    \item 取$\Uv = \Av$与$\Xv$无关，$\Vv = \Xv^n$，其中$n$是正整数，结合式(\ref{eq: power})可得
+          \begin{align*}
+              \left[ \frac{\partial \tr(\Av \Xv^n)}{\partial \Xv} \right]_{ij} & = \tr \left( \Av \frac{\partial \Xv^n}{\partial x_{ji}} \right) = \tr \left( \Av \sum_{k \in [n]} \Xv^{k-1} \frac{\partial \Xv}{\partial x_{ji}} \Xv^{n-k} \right) = \sum_{k \in [n]} \tr \left( \Av \Xv^{k-1} \frac{\partial \Xv}{\partial x_{ji}} \Xv^{n-k} \right) \\
+                                                                               & = \sum_{k \in [n]} \tr ( \Xv^{n-k} \Av \Xv^{k-1} \Ev_{ji} ) = \sum_{k \in [n]} [\Xv^{n-k} \Av \Xv^{k-1}]_{ij}                                                                                                                                                         \\
+                                                                               & \Longrightarrow \frac{\partial \tr(\Av \Xv^n)}{\partial \Xv} = \sum_{k \in [n]} \Xv^{n-k} \Av \Xv^{k-1}
+          \end{align*}
+          进一步若$\Av = \Iv$，则
+          \begin{align*}
+              \frac{\partial \tr(\Xv^n)}{\partial \Xv} = \sum_{k \in [n]} \Xv^{n-k} \Xv^{k-1} = \sum_{k \in [n]} \Xv^{n-1} = n \Xv^{n-1}
+          \end{align*}
+          不难发现形式上和单变量的求导公式是一样的：$\partial x^n / \partial x = n x^{n-1}$。记
+          \begin{align*}
+              e^{\Xv}  & = \Iv + \Xv + \frac{\Xv^2}{2!} + \frac{\Xv^3}{3!} + \cdots              \\
+              \sin \Xv & = \Xv - \frac{\Xv^3}{3!} + \frac{\Xv^5}{5!} - \cdots                    \\
+              \cos \Xv & = \Iv - \frac{\Xv^2}{2!} + \frac{\Xv^4}{4!} - \frac{\Xv^6}{6!} + \cdots
+          \end{align*}
+          结合式(\ref{eq: power})可得
+          \begin{align*}
+              \frac{\partial \tr(e^{\Xv})}{\partial \Xv} & = \frac{\partial }{\partial \Xv} \tr \left( \Iv + \Xv + \frac{\Xv^2}{2!} + \frac{\Xv^3}{3!} + \cdots \right)                                                                                                   \\
+                                                         & = \frac{\partial \tr (\Iv)}{\partial \Xv} + \frac{\partial \tr (\Xv)}{\partial \Xv} + \frac{1}{2!} \frac{\partial \tr (\Xv^2)}{\partial \Xv} + \frac{1}{3!} \frac{\partial \tr (\Xv^3)}{\partial \Xv} + \cdots \\
+                                                         & = \Iv + \Xv + \frac{\Xv^2}{2!} + \cdots = e^{\Xv}
+          \end{align*}
+          以及
+          \begin{align*}
+              \frac{\partial \tr(\sin \Xv)}{\partial \Xv} & = \frac{\partial }{\partial \Xv} \tr \left( \Xv - \frac{\Xv^3}{3!} + \frac{\Xv^5}{5!} - \cdots \right)                                                                                                                        \\
+                                                          & = \frac{1}{1!} \frac{\partial \tr (\Xv)}{\partial \Xv} - \frac{1}{3!} \frac{\partial \tr (\Xv^3)}{\partial \Xv} + \frac{1}{5!} \frac{\partial \tr (\Xv^5)}{\partial \Xv} - \cdots                                             \\
+                                                          & = \Iv - \frac{\Xv^2}{2!} + \frac{\Xv^4}{4!} - \cdots = \cos \Xv                                                                                                                                                               \\
+              \frac{\partial \tr(\cos \Xv)}{\partial \Xv} & = \frac{\partial }{\partial \Xv} \tr \left( \Iv - \frac{\Xv^2}{2!} + \frac{\Xv^4}{4!} - \frac{\Xv^6}{6!} + \cdots \right)                                                                                                     \\
+                                                          & = \frac{\partial \tr (\Iv)}{\partial \Xv} - \frac{1}{2!} \frac{\partial \tr (\Xv^2)}{\partial \Xv} + \frac{1}{4!} \frac{\partial \tr (\Xv^4)}{\partial \Xv} - \frac{1}{6!} \frac{\partial \tr (\Xv^6)}{\partial \Xv} + \cdots \\
+                                                          & = - \Xv + \frac{\Xv^3}{3!} - \frac{\Xv^5}{5!} + \cdots = - \sin \Xv
+          \end{align*}
+\end{itemize}
+
+\subsection{行列式对矩阵求导}
+
+设$\Xv \in \Rbb^{m \times m}$，记$x_{ji}$有一个微小增量$\epsilon$后的矩阵为$\Xv(x_{ji} + \epsilon)$，根据第$j$行Laplace展开易知
+\begin{align*}
+    |\Xv(x_{ji} + \epsilon)| - |\Xv| = \epsilon A_{ji}
+\end{align*}
+其中$A_{ji}$是关于$x_{ji}$的代数余子式。于是
+\begin{align*}
+    \left[ \frac{\partial |\Xv|}{\partial \Xv} \right]_{ij} = \frac{\partial |\Xv|}{\partial x_{ji}} = \lim_{\epsilon \rightarrow 0} \frac{|\Xv(x_{ji} + \epsilon)| - |\Xv|}{\epsilon} = A_{ji}
+\end{align*}
+从而
+\begin{align*}
+    \frac{\partial |\Xv|}{\partial \Xv} = \begin{bmatrix}
+        A_{11} & A_{21} & \cdots & A_{n1} \\
+        A_{12} & A_{22} & \cdots & A_{n2} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        A_{1n} & A_{2n} & \cdots & A_{nn}
+    \end{bmatrix} = \Xv^* \overset{\text{若}\Xv\text{可逆}}{=} |\Xv| \Xv^{-1}
+\end{align*}
+
+若$a$与$\Xv$无关，则
+\begin{align*}
+    \frac{\partial \ln |a \Xv|}{\partial \Xv} = \frac{\partial \ln a^m |\Xv|}{\partial \Xv} = \frac{\partial \ln a^m}{\partial \Xv} + \frac{\partial \ln |\Xv|}{\partial \Xv} = \frac{1}{|\Xv|} \frac{\partial |\Xv|}{\partial \Xv} = \frac{\Xv^*}{|\Xv|} \overset{\text{若}\Xv\text{可逆}}{=} \Xv^{-1}
+\end{align*}
+
+对于任意关于$|\Av|$的函数，如$\ln |\Av|$，由链式法则也不难求得其导数为$\Av^{-\top}$。
+
+
+
+\end{document}
+
