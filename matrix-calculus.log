@@ -1,10 +1,10 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/Arch Linux) (preloaded format=xelatex 2020.10.7)  1 DEC 2020 03:40
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/Arch Linux) (preloaded format=xelatex 2020.11.24)  1 DEC 2020 12:04
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/avanti/Notes/Math/matrix-calculus/matrix-calculus
-(/home/avanti/Notes/Math/matrix-calculus/matrix-calculus.tex
+**/home/avanti/Notes/Math/Matrix-calculus/matrix-calculus
+(/home/avanti/Notes/Math/Matrix-calculus/matrix-calculus.tex
 LaTeX2e <2020-02-02> patch level 5
 L3 programming layer <2020-06-03> (/usr/share/texmf-dist/tex/latex/ctex/ctexart.cls (/usr/share/texmf-dist/tex/latex/ctex/config/ctexbackend.cfg
 File: ctexbackend.cfg 2020/05/16 v2.5.2 Backend configuration file (CTEX)
@@ -776,14 +776,14 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 145.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-] [2] [3] [4] [5] [6] [7] [8] [9] [10] (./matrix-calculus.aux) ) 
+] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] (./matrix-calculus.aux) ) 
 Here is how much of TeX's memory you used:
- 33417 strings out of 479284
- 894668 string characters out of 5886220
- 1283641 words of memory out of 5000000
- 50467 multiletter control sequences out of 15000+600000
+ 33416 strings out of 479284
+ 894626 string characters out of 5886219
+ 1281650 words of memory out of 5000000
+ 50466 multiletter control sequences out of 15000+600000
  545671 words of font info for 113 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 74i,17n,127p,772b,479s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 74i,16n,127p,772b,479s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on matrix-calculus.pdf (10 pages).
+Output written on matrix-calculus.pdf (11 pages).

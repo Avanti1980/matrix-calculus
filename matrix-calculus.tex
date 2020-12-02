@@ -241,11 +241,9 @@
 其中第二行是因为
 \begin{align*}
     \left[ \frac{\partial \Uv \Vv}{\partial x} \right]_{ij} & = \frac{\partial \sum_k u_{ik} v_{kj}}{\partial x} = \sum_k \frac{\partial u_{ik}}{\partial x} v_{kj} + \sum_k u_{ik} \frac{\partial v_{kj}}{\partial x} = \left[ \frac{\partial \Uv}{\partial x} \Vv \right]_{ij} + \left[ \Uv \frac{\partial \Vv}{\partial x} \right]_{ij} \\
-                                                            & \Longrightarrow \frac{\partial \Uv \Vv}{\partial x} = \frac{\partial \Uv}{\partial x} \Vv + \Uv \frac{\partial \Vv}{\partial x}                                                                                                                                              \\
-    \left[ \frac{\partial uv}{\partial \Xv} \right]_{ij}    & = \frac{\partial uv}{\partial x_{ji}} = \frac{\partial u}{\partial x_{ji}} v + u \frac{\partial v}{\partial x_{ji}} = \left[ \frac{\partial u}{\partial \Xv} \right]_{ij} v + u \left[ \frac{\partial v}{\partial \Xv} \right]_{ij}                                          \\
-                                                            & \Longrightarrow \frac{\partial uv}{\partial \Xv} = \frac{\partial u}{\partial \Xv} v + u \frac{\partial v}{\partial \Xv}
+    \left[ \frac{\partial uv}{\partial \Xv} \right]_{ij}    & = \frac{\partial uv}{\partial x_{ji}} = \frac{\partial u}{\partial x_{ji}} v + u \frac{\partial v}{\partial x_{ji}} = \left[ \frac{\partial u}{\partial \Xv} \right]_{ij} v + u \left[ \frac{\partial v}{\partial \Xv} \right]_{ij}
 \end{align*}
-第一行可看作第二行的特例。$\partial \uv \vv / \partial \xv$有两种可能，一是$\uv \vv$为标量，即两者的内积，后文会讲；二是$\uv \vv$为矩阵，我们不考虑$\partial 矩阵 / \partial 向量$这种情形。
+第一行可看作第二行的特例。$\partial \uv \vv / \partial \xv$有两种可能，一是$\uv \vv$为标量，即两者的内积，这里暂且不表，后文再讲；二是$\uv \vv$为矩阵，这属于我们不考虑的$\partial 矩阵 / \partial 向量$情形。
 
 单变量微积分中有$\partial x / \partial x = 1$，类似的这里有
 \begin{align*}
@@ -257,34 +255,31 @@
 \begin{align*}
     \frac{\partial g(u)}{\partial x} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial x}
 \end{align*}
-类似的设$\xv \in \Rbb^n$，$\uv = \uv(\xv) \in \Rbb^m$，$\gv: \Rbb^m \mapsto \Rbb^l$，则
-\begin{align*}
-    \underbrace{\frac{\partial \gv(\uv)}{\partial \xv}}_{l \times n} = \underbrace{\frac{\partial \gv(\uv)}{\partial \uv}}_{l \times m} \underbrace{\frac{\partial \uv}{\partial \xv}}_{m \times n}
-\end{align*}
-这是因为
-\begin{align*}
-    \left[ \frac{\partial \gv(\uv)}{\partial \xv} \right]_{ij} & = \frac{\partial [\gv(\uv)]_i}{\partial x_j} = \sum_{k \in [m]} \frac{\partial [\gv(\uv)]_i}{\partial u_k} \frac{\partial u_k}{\partial x_j} = \frac{\partial [\gv(\uv)]_i}{\partial \uv} \frac{\partial \uv}{\partial x_j} = \left[ \frac{\partial \gv(\uv)}{\partial \uv} \right]_{i,:} \left[ \frac{\partial \uv}{\partial \xv} \right]_{:,j} = \left[ \frac{\partial \gv(\uv)}{\partial \uv} \frac{\partial \uv}{\partial \xv} \right]_{i,j} \\
-                                                               & \Longrightarrow \frac{\partial \gv(\uv)}{\partial \xv} = \frac{\partial \gv(\uv)}{\partial \uv} \frac{\partial \uv}{\partial \xv}
-\end{align*}
-注意若$n = m = l = 1$，就退化成了单变量的链式法则。
-
-设$u = u(\Xv)$，$g: \Rbb \mapsto \Rbb$，则
-\begin{align*}
-    \frac{\partial g(u)}{\partial \Xv} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial \Xv}
-\end{align*}
-这是因为
-\begin{align*}
-    \left[ \frac{\partial g(u)}{\partial \Xv} \right]_{ij} & = \frac{\partial g(u)}{\partial x_{ji}} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial x_{ji}} = \frac{\partial g(u)}{\partial u} \left[ \frac{\partial u}{\partial \Xv} \right]_{ij} \Longrightarrow \frac{\partial g(u)}{\partial \Xv} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial \Xv}
-\end{align*}
-
-设$\Uv = \Uv(x) \in \Rbb^{m \times n}$，$g: \Rbb^{m \times n} \mapsto \Rbb$，则
-\begin{align*}
-    \frac{\partial g(\Uv)}{\partial x} = \sum_{p,q} \frac{\partial g(\Uv)}{\partial u_{pq}} \frac{\partial u_{pq}}{\partial x} = \tr \left( \frac{\partial g(\Uv)}{\partial \Uv} \frac{\partial \Uv}{\partial x} \right)
-\end{align*}
-其中第二个等号是因为
-\begin{align*}
-    \tr(\Av^\top \Bv) = \sum_q \sum_p a_{pq} b_{pq} = \sum_{p,q} a_{pq} b_{pq}
-\end{align*}
+类似的，
+\begin{itemize}
+    \item 只涉及向量：设$\xv \in \Rbb^n$，$\uv = \uv(\xv) \in \Rbb^m$，$\gv: \Rbb^m \mapsto \Rbb^l$，则
+          \begin{align*}
+              \underbrace{\frac{\partial \gv(\uv)}{\partial \xv}}_{l \times n} = \underbrace{\frac{\partial \gv(\uv)}{\partial \uv}}_{l \times m} \underbrace{\frac{\partial \uv}{\partial \xv}}_{m \times n}
+          \end{align*}
+          这是因为
+          \begin{align*}
+              \left[ \frac{\partial \gv(\uv)}{\partial \xv} \right]_{ij} & = \frac{\partial [\gv(\uv)]_i}{\partial x_j} = \sum_{k \in [m]} \frac{\partial [\gv(\uv)]_i}{\partial u_k} \frac{\partial u_k}{\partial x_j} = \frac{\partial [\gv(\uv)]_i}{\partial \uv} \frac{\partial \uv}{\partial x_j} \\
+                                                                         & = \left[ \frac{\partial \gv(\uv)}{\partial \uv} \right]_{i,:} \left[ \frac{\partial \uv}{\partial \xv} \right]_{:,j} = \left[ \frac{\partial \gv(\uv)}{\partial \uv} \frac{\partial \uv}{\partial \xv} \right]_{i,j}
+          \end{align*}
+          注意若$n = m = l = 1$，就退化成了单变量的链式法则。
+    \item 自变量是矩阵：设$u = u(\Xv)$，$g: \Rbb \mapsto \Rbb$，则
+          \begin{align*}
+              \frac{\partial g(u)}{\partial \Xv} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial \Xv}
+          \end{align*}
+          这是因为
+          \begin{align*}
+              \left[ \frac{\partial g(u)}{\partial \Xv} \right]_{ij} & = \frac{\partial g(u)}{\partial x_{ji}} = \frac{\partial g(u)}{\partial u} \frac{\partial u}{\partial x_{ji}} = \frac{\partial g(u)}{\partial u} \left[ \frac{\partial u}{\partial \Xv} \right]_{ij}
+          \end{align*}
+    \item 中间变量是矩阵：设$\Uv = \Uv(x) \in \Rbb^{m \times n}$，$g: \Rbb^{m \times n} \mapsto \Rbb$，则
+          \begin{align} \label{eq: chain-matrix}
+              \blue{\frac{\partial g(\Uv)}{\partial x}} = \sum_p \sum_q \frac{\partial g(\Uv)}{\partial u_{pq}} \frac{\partial u_{pq}}{\partial x} = \sum_q \sum_p \left[ \frac{\partial g(\Uv)}{\partial \Uv} \right]_{qp} \left[ \frac{\partial \Uv}{\partial x} \right]_{pq} = \blue{\tr \left( \frac{\partial g(\Uv)}{\partial \Uv} \frac{\partial \Uv}{\partial x} \right)}
+          \end{align}
+\end{itemize}
 
 
 \section{向量对标量求导}
@@ -332,7 +327,7 @@
           \end{align*}
     \item 取$\uv = \vv = \xv$，则
           \begin{align*}
-              \frac{\partial \xv^\top \Av \xv}{\partial \xv} = \xv^\top \Av \frac{\partial \xv}{\partial \xv} + \xv^\top \Av^\top \frac{\partial \xv}{\partial \xv} = \xv^\top (\Av + \Av^\top) \overset{\text{若}\Av\text{对称}}{=} 2 \xv^\top \Av
+              \frac{\partial \xv^\top \Av \xv}{\partial \xv} = \xv^\top \Av \frac{\partial \xv}{\partial \xv} + \xv^\top \Av^\top \frac{\partial \xv}{\partial \xv} = \xv^\top (\Av + \Av^\top)
           \end{align*}
           进一步若$\Av = \Iv$，则
           \begin{align*}
@@ -387,7 +382,7 @@
 \begin{align} \label{eq: product}
     \blue{\frac{\partial \Uv \Vv \Wv}{\partial x}} = \frac{\partial \Uv}{\partial x} \Vv \Wv + \Uv \frac{\partial \Vv \Wv}{\partial x} = \frac{\partial \Uv}{\partial x} \Vv \Wv + \Uv \left( \frac{\partial \Vv}{\partial x} \Wv + \Vv \frac{\partial \Wv}{\partial x} \right) = \blue{\frac{\partial \Uv}{\partial x} \Vv \Wv + \Uv \frac{\partial \Vv}{\partial x} \Wv + \Uv \Vv \frac{\partial \Wv}{\partial x}}
 \end{align}
-据此可知若$\Av$、$\Bv$与$x$无关，则
+由此可知若$\Av$、$\Bv$与$x$无关，则
 \begin{align*}
     \frac{\partial \Av \Uv \Bv}{\partial x} = \Av \frac{\partial \Uv}{\partial x} \Bv
 \end{align*}
@@ -456,7 +451,7 @@
                                                      & = \blue{\frac{\partial \Uv}{\partial x} \circ \Vv + \Uv \circ \frac{\partial \Vv}{\partial x}}
 \end{align*}
 
-设多项式函数$g(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots$，则$g'(x) = a_1 + 2 a_2 x + 3 a_3 x^2 + \cdots$，设$\Av$为与$x$无关的方阵，记
+设多项式函数$g(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots$，则$g'(x) = a_1 + 2 a_2 x + 3 a_3 x^2 + \cdots$，若$\Av$为与$x$无关的方阵，记
 \begin{align*}
     g (x \Av)  & = a_0 \Iv + a_1 x \Av + a_2 x^2 \Av^2 + a_3 x^3 \Av^3 + \cdots \\
     g' (x \Av) & = a_1 \Iv + 2 a_2 x \Av + 3 a_3 x^2 \Av^2 + \cdots
@@ -559,30 +554,34 @@
 
 \subsection{行列式对矩阵求导}
 
-设$\Xv \in \Rbb^{m \times n}$、$\Av \in \Rbb^{l \times m}$、$\Bv \in \Rbb^{n \times l}$，则$\Yv = \Av \Xv \Bv \in \Rbb^{l \times l}$，易知
+设$\Xv \in \Rbb^{m \times n}$、$\Av \in \Rbb^{l \times m}$、$\Bv \in \Rbb^{n \times l}$、$\Yv = \Av \Xv \Bv \in \Rbb^{l \times l}$，$\Av$、$\Bv$与$\Xv$无关，结合式(\ref{eq: chain-matrix})易知
 \begin{align*}
-    \left[ \frac{\partial |\Av \Xv \Bv|}{\partial \Xv} \right]_{ij} = \frac{\partial |\Yv|}{\partial x_{ji}} = \sum_p \sum_q \frac{\partial |\Yv|}{\partial y_{pq}}\frac{\partial y_{pq}}{\partial x_{ji}}
+    \left[ \frac{\partial |\Av \Xv \Bv|}{\partial \Xv} \right]_{ij} = \frac{\partial |\Yv|}{\partial x_{ji}} = \sum_p \sum_q \frac{\partial |\Yv|}{\partial y_{pq}}\frac{\partial y_{pq}}{\partial x_{ji}} = \tr \left( \frac{\partial |\Yv|}{\partial \Yv} \frac{\partial \Yv}{\partial x_{ji}} \right)
 \end{align*}
-注意$y_{pq} = \sum_s \sum_t a_{ps} x_{st} b_{tq}$，因此第二项
+其中第二项
 \begin{align*}
-    \frac{\partial y_{pq}}{\partial x_{ji}} = \frac{\partial \sum_s \sum_t a_{ps} x_{st} b_{tq}}{\partial x_{ji}} = a_{pj} b_{iq}
+    \frac{\partial \Yv}{\partial x_{ji}} = \frac{\partial \Av \Xv \Bv}{\partial x_{ji}} = \Av \frac{\partial \Xv}{\partial x_{ji}} \Bv = \Av \Ev_{ji} \Bv
 \end{align*}
-记$y_{pq}$有一个微小增量$\epsilon$后的矩阵为$\Yv(y_{pq} + \epsilon)$，根据第$j$行Laplace展开易知
+记$y_{ji}$有一个微小增量$\epsilon$后的矩阵为$\Yv(y_{ji} + \epsilon)$，根据第$j$行Laplace展开易知
 \begin{align*}
-    |\Yv(y_{pq} + \epsilon)| - |\Yv| = \epsilon C_{pq}
+    |\Yv(y_{ji} + \epsilon)| - |\Yv| = \epsilon C_{ji}
 \end{align*}
-其中$C_{pq}$是关于$y_{pq}$的\blue{代数余子式}，因此第一项
+其中$C_{ji}$是关于$y_{ji}$的\blue{代数余子式}，因此
 \begin{align*}
-    \frac{\partial |\Yv|}{\partial y_{pq}} = \lim_{\epsilon \rightarrow 0} \frac{|\Yv(y_{pq} + \epsilon)| - |\Yv|}{\epsilon} = C_{pq} 
+    \left[ \frac{\partial |\Yv|}{\partial \Yv} \right]_{ij} = \frac{\partial |\Yv|}{\partial y_{ji}} = \lim_{\epsilon \rightarrow 0} \frac{|\Yv(y_{ji} + \epsilon)| - |\Yv|}{\epsilon} = C_{ji}
+\end{align*}
+故第一项
+\begin{align*}
+    \frac{\partial |\Yv|}{\partial \Yv} = \begin{bmatrix}
+        C_{11} & C_{21} & \cdots & C_{n1} \\
+        C_{12} & C_{22} & \cdots & C_{n2} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        C_{1n} & C_{2n} & \cdots & C_{nn}
+    \end{bmatrix} = \Yv^*
 \end{align*}
 代入可得
 \begin{align*}
-    \left[ \frac{\partial |\Av \Xv \Bv|}{\partial \Xv} \right]_{ij} & = \sum_p \sum_q b_{iq} C_{pq} a_{pj} = \left[ \Bv \begin{bmatrix}
-            C_{11} & C_{21} & \cdots & C_{n1} \\
-            C_{12} & C_{22} & \cdots & C_{n2} \\
-            \vdots & \vdots & \ddots & \vdots \\
-            C_{1n} & C_{2n} & \cdots & C_{nn}
-        \end{bmatrix} \Av \right]_{ij} = [\Bv \Yv^* \Av]_{ij} \\
+    \left[ \frac{\partial |\Av \Xv \Bv|}{\partial \Xv} \right]_{ij} & = \tr \left( \frac{\partial |\Yv|}{\partial \Yv} \frac{\partial \Yv}{\partial x_{ji}} \right) = \tr (\Yv^* \Av \Ev_{ji} \Bv) = [\Bv \Yv^* \Av]_{ij} \\
                                                                     & \Longrightarrow \blue{\frac{\partial |\Av \Xv \Bv|}{\partial \Xv} = \Bv (\Av \Xv \Bv)^* \Av}
 \end{align*}
 若$\Xv$、$\Av$、$\Bv$均为可逆方阵，则$\Yv = \Av \Xv \Bv$亦为可逆方阵，于是
@@ -593,16 +592,44 @@
 \begin{align*}
     \frac{\partial |\Xv|}{\partial \Xv} = \Xv^* = |\Xv| \Xv^{-1}
 \end{align*}
-事实上式(\ref{eq: determinant})也可由上式导出
+由此可得
 \begin{align*}
-    \frac{\partial |\Av \Xv \Bv|}{\partial \Xv} = \frac{\partial |\Av| |\Xv| |\Bv|}{\partial \Xv} = |\Av| \frac{\partial |\Xv|}{\partial \Xv} |\Bv| = |\Av| |\Xv| \Xv^{-1} |\Bv| = |\Av \Xv \Bv| \Xv^{-1}
+    \frac{\partial |\Xv^n|}{\partial \Xv} = \frac{\partial |\Xv|^n}{\partial \Xv} = n |\Xv|^{n-1} \Xv^* = n |\Xv|^n \Xv^{-1} = n |\Xv^n| \Xv^{-1}
 \end{align*}
 若$a$与$\Xv$无关，则
 \begin{align*}
     \frac{\partial \ln |a \Xv|}{\partial \Xv} = \frac{\partial \ln a^m |\Xv|}{\partial \Xv} = \frac{\partial \ln a^m}{\partial \Xv} + \frac{\partial \ln |\Xv|}{\partial \Xv} = \frac{1}{|\Xv|} \frac{\partial |\Xv|}{\partial \Xv} = \frac{\Xv^*}{|\Xv|} = \Xv^{-1}
 \end{align*}
 
-
+设$\Xv \in \Rbb^{m \times n}$、$\Av \in \Rbb^{m \times m}$、$\Yv = \Xv^\top \Av \Xv \in \Rbb^{n \times n}$可逆，$\Av$与$\Xv$无关，易知有
+\begin{align*}
+    \left[ \frac{\partial |\Xv^\top \Av \Xv|}{\partial \Xv} \right]_{ij} & = \tr \left( \Yv^* \frac{\partial \Xv^\top \Av \Xv}{\partial x_{ji}} \right) = \tr \left( \Yv^* \frac{\partial \Xv^\top}{\partial x_{ji}} \Av \Xv \right) + \tr \left( \Yv^* \Xv^\top \Av \frac{\partial \Xv}{\partial x_{ji}} \right) \\
+                                                                         & = \tr ( \Yv^* \Ev_{ij} \Av \Xv ) + \tr ( \Yv^* \Xv^\top \Av \Ev_{ji} ) = [\Av \Xv \Yv^*]_{ji} + [\Yv^* \Xv^\top \Av]_{ij}
+\end{align*}
+于是
+\begin{align*}
+    \frac{\partial |\Xv^\top \Av \Xv|}{\partial \Xv} & = (\Av \Xv \Yv^*)^\top + \Yv^* \Xv^\top \Av = (\Av \Xv |\Xv^\top \Av \Xv| (\Xv^\top \Av \Xv)^{-1})^\top + |\Xv^\top \Av \Xv| (\Xv^\top \Av \Xv)^{-1} \Xv^\top \Av \\
+                                                     & = |\Xv^\top \Av \Xv| (\Xv^\top \Av^\top \Xv)^{-1} \Xv^\top \Av^\top + |\Xv^\top \Av \Xv| (\Xv^\top \Av \Xv)^{-1} \Xv^\top \Av                                     \\
+                                                     & = |\Xv^\top \Av \Xv| ((\Xv^\top \Av^\top \Xv)^{-1} \Xv^\top \Av^\top + (\Xv^\top \Av \Xv)^{-1} \Xv^\top \Av)
+\end{align*}
+若$\Av$对称，则
+\begin{align*}
+    \frac{\partial |\Xv^\top \Av \Xv|}{\partial \Xv} = 2 |\Xv^\top \Av \Xv| (\Xv^\top \Av \Xv)^{-1} \Xv^\top \Av
+\end{align*}
+\begin{itemize}
+    \item 若$\Xv$、$\Av$是方阵，则其均可逆，于是
+          \begin{align*}
+              \frac{\partial |\Xv^\top \Av \Xv|}{\partial \Xv} = 2 |\Xv^\top| |\Av| |\Xv| \Xv^{-1} \Av^{-1} \Xv^{-\top} \Xv^\top \Av = 2 |\Xv|^2 |\Av| \Xv^{-1}
+          \end{align*}
+    \item 若$\Av = \Iv$，则
+          \begin{align*}
+              \frac{\partial |\Xv^\top \Xv|}{\partial \Xv} = 2 |\Xv^\top \Xv| (\Xv^\top \Xv)^{-1} \Xv^\top = 2 |\Xv^\top \Xv| \Xv^\dagger
+          \end{align*}
+          以及
+          \begin{align*}
+              \frac{\partial \ln |\Xv^\top \Xv|}{\partial \Xv} = \frac{1}{|\Xv^\top \Xv|} \frac{\partial |\Xv^\top \Xv|}{\partial \Xv} = 2 \Xv^\dagger
+          \end{align*}
+\end{itemize}
 
 \end{document}
 
